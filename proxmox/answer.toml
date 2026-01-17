@@ -8,6 +8,7 @@ keyboard = "us"
 gateway = "10.10.10.254"
 nameserver = "9.9.9.9"
 interface = "eno1"
+ip = "{{ip}}"
 
 [storage]
 target = "/dev/sda"
