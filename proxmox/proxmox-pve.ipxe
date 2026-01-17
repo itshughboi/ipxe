@@ -3,15 +3,19 @@
 # PXE server
 set live_endpoint http://10.10.10.111/netbootxyz
 
-# Automatically boot PVE
-goto pve-normal
 
-:pve-normal
-set params splash=silent
-set kernel_url ${live_endpoint}/asset-mirror/releases/download/8.4-1-613c19ff/
+iseq ${net0/mac} c8:ff:bf:00:80:7c && set hostname pve-srv-2 && set ip 10.10.10.2
+iseq ${net0/mac} 1c:83:41:40:ff:0b && set hostname pve-srv-3 && set ip 10.10.10.3
+iseq ${net0/mac} c8:ff:bf:03:f3:50 && set hostname pve-srv-4 && set ip 10.10.10.4
+
+
+set kernel_url ${live_endpoint}/
 imgfree
-# Fully unattended boot with answer file
-kernel ${kernel_url}vmlinuz vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet ${params} auto=true url=${live_endpoint}/proxmox/answer.toml
+kernel ${kernel_url}vmlinuz vga=791 video=vesafb:ywrap,mtrr \
+      ramdisk_size=16777216 rw quiet splash=silent auto=true \
+      url=${kernel_url}answer.toml hostname=${hostname} ip=${ip} gateway=10.10.10.254 nameserver=9.9.9.9
+
+
 initrd ${kernel_url}initrd
 initrd ${kernel_url}proxmox.iso /proxmox.iso
 boot
