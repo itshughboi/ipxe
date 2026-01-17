@@ -1,0 +1,14 @@
+[general]
+hostname = "{{hostname}}"
+password = "$6$eHThTTdQeYxWYzBl$D81gUeKAtBWb3okugOsNhklrNwyIMwKWulQXPppmz1AyFcyTN1zDZb0ZtgeWTXTfp1HH7Df1kZkaiJYG3s90G/" #SHA-512
+timezone = "America/Denver"
+keyboard = "us"
+
+[network]
+gateway = "10.10.10.254"
+nameserver = "9.9.9.9"
+interface = "eno1"
+
+[storage]
+target = "/dev/sda"
+filesystem = "ext4"
