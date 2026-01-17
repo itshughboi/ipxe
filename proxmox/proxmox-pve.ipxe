@@ -1,0 +1,17 @@
+#!ipxe
+
+# PXE server
+set live_endpoint http://10.10.10.111/netbootxyz
+
+# Automatically boot PVE
+goto pve-normal
+
+:pve-normal
+set params splash=silent
+set kernel_url ${live_endpoint}/asset-mirror/releases/download/8.4-1-613c19ff/
+imgfree
+# Fully unattended boot with answer file
+kernel ${kernel_url}vmlinuz vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet ${params} auto=true url=${live_endpoint}/proxmox/answer.toml
+initrd ${kernel_url}initrd
+initrd ${kernel_url}proxmox.iso /proxmox.iso
+boot
